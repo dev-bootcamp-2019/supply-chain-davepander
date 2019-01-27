@@ -24,14 +24,14 @@ contract('SupplyChain', function(accounts) {
 
         var eventEmitted = false
         const name = "book"
-	
+
 	const tx = await supplyChain.addItem(name, price, {from: alice})
-	
+
 	if (tx.logs[0].event) {
 		sku = tx.logs[0].args.sku.toString(10)
 		eventEmitted = true
 	}
-        
+
         const result = await supplyChain.fetchItem.call(sku)
 
         assert.equal(result[0], name, 'the name of the last added item does not match the expected value')
@@ -46,13 +46,13 @@ contract('SupplyChain', function(accounts) {
         const supplyChain = await SupplyChain.deployed()
 
         var eventEmitted = false
-        const amount = "2000" 
+        const amount = "2000"
 
         var aliceBalanceBefore = await web3.eth.getBalance(alice)
         var bobBalanceBefore = await web3.eth.getBalance(bob)
 
         const tx = await supplyChain.buyItem(sku, {from: bob, value: amount})
-	
+
 	if (tx.logs[0].event) {
 		sku = tx.logs[0].args.sku.toString(10)
 		eventEmitted = true
@@ -76,7 +76,7 @@ contract('SupplyChain', function(accounts) {
         var eventEmitted = false
 
         const tx = await supplyChain.shipItem(sku, {from: alice})
-	
+
 	if (tx.logs[0].event) {
 		sku = tx.logs[0].args.sku.toString(10)
 		eventEmitted = true
@@ -94,7 +94,7 @@ contract('SupplyChain', function(accounts) {
         var eventEmitted = false
 
         const tx = await supplyChain.receiveItem(sku, {from: bob})
-	
+
 	if (tx.logs[0].event) {
 		sku = tx.logs[0].args.sku.toString(10)
 		eventEmitted = true
